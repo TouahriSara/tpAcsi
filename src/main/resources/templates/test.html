@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Front-end with AJAX and Java</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Rest of your HTML content -->
+  <form id="myForm">
+    <label for="input1">Input 1:</label>
+    <input type="text" id="input1" name="input1"><br><br>
+    
+    <label for="input2">Input 2:</label>
+    <input type="text" id="input2" name="input2"><br><br>
+    
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="result"></div>
+  <script>
+    $(document).ready(function() {
+    $('#myForm').submit(function(event) {
+    event.preventDefault();
+
+    // Retrieve input value
+    var nom = $('#input1').val();
+    console.log("hello");
+    // Make an AJAX request to the backend
+    $.ajax({
+      url: 'http://localhost:8080/maladies/' + encodeURIComponent(nom), // Append the input value to the URL
+      type: 'GET', // Specify the HTTP method
+      success: function(response) {
+        // Handle the response from the backend
+        // Update HTML elements with the retrieved data
+        $('#result').text(response.symptomes);
+        console.log(response.symptomes);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        // Handle any error that occurs during the AJAX request
+        console.log('Error:', errorThrown);
+      }
+    });
+  });
+});
+
+  </script>
+</body>
+</html>
